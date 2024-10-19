@@ -32,21 +32,37 @@ export default function Home() {
         }
     };
 
+    const handleReset = () => {
+        setMessages([]);
+        setInput('');
+    };
+
+    const handlePersonaChange = (newPersona: number) => {
+        setSelectedPersona(newPersona);
+        handleReset();
+    };
+
     return (
         <main className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">AnonTherapy Chat</h1>
-            <div className="mb-4">
-                <label htmlFor="persona-select" className="block mb-2">Select Therapist Persona:</label>
+            <div className="mb-4 flex items-center">
+                <label htmlFor="persona-select" className="mr-2">Select Therapist Persona:</label>
                 <select
                     id="persona-select"
                     value={selectedPersona}
-                    onChange={(e) => setSelectedPersona(Number(e.target.value))}
-                    className="w-full p-2 border rounded"
+                    onChange={(e) => handlePersonaChange(Number(e.target.value))}
+                    className="p-2 border rounded mr-2"
                 >
                     {personas.map(persona => (
                         <option key={persona.id} value={persona.id}>{persona.name}</option>
                     ))}
                 </select>
+                <button
+                    onClick={handleReset}
+                    className="bg-red-500 text-white p-2 rounded"
+                >
+                    Reset Chat
+                </button>
             </div>
             <div className="bg-gray-100 p-4 h-96 overflow-y-auto mb-4">
                 {messages.map((message, index) => (
@@ -63,7 +79,7 @@ export default function Home() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     className="flex-grow p-2 border rounded-l"
-                    placeholder="Type your message..."
+                    placeholder="All my memecoins went to zero and my dog left me. I am so sad. :("
                 />
                 <button type="submit" className="bg-blue-500 text-white p-2 rounded-r">Send</button>
             </form>
