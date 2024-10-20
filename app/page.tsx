@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const personas = [
@@ -14,6 +14,20 @@ export default function Home() {
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState<Array<{ role: string; content: string }>>([]);
     const [selectedPersona, setSelectedPersona] = useState(1);
+    const [savedBlobIds, setSavedBlobIds] = useState<{[key: number]: string}>({});
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        // Load saved blobIds from localStorage on component mount
+        const loadedBlobIds: {[key: number]: string} = {};
+        personas.forEach(persona => {
+            const blobId = localStorage.getItem(`persona_${persona.id}`);
+            if (blobId) {
+                loadedBlobIds[persona.id] = blobId;
+            }
+        });
+        setSavedBlobIds(loadedBlobIds);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -42,10 +56,47 @@ export default function Home() {
         handleReset();
     };
 
+    const handleSave = async () => {
+        try {
+            const response = await axios.post('/api/save', { messages, persona: selectedPersona });
+            if (response.data.success) {
+                const { blobId, persona } = response.data;
+                localStorage.setItem(`persona_${persona}`, blobId);
+                setSavedBlobIds(prev => ({ ...prev, [persona]: blobId }));
+                alert('Chat saved successfully!');
+            } else {
+                throw new Error(response.data.message);
+            }
+        } catch (error) {
+            console.error('Error saving chat:', error);
+            alert('Failed to save chat. Please try again.');
+        }
+    };
+
+    const handleLoad = async () => {
+        const blobId = savedBlobIds[selectedPersona];
+        if (!blobId) {
+            alert('No saved chat found for this persona.');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const response = await axios.get(`/api/fetchBlob?blobId=${blobId}`);
+            setMessages(response.data.messages);
+            alert('Chat loaded successfully!');
+        } catch (error) {
+            console.error('Error loading chat:', error);
+            alert('Failed to load chat. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <main className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">AnonTherapy Chat</h1>
-            <div className="mb-4 flex items-center">
+            <div className="mb-4 flex items-center flex-wrap">
                 <label htmlFor="persona-select" className="mr-2">Select Therapist Persona:</label>
                 <select
                     id="persona-select"
@@ -59,10 +110,30 @@ export default function Home() {
                 </select>
                 <button
                     onClick={handleReset}
-                    className="bg-red-500 text-white p-2 rounded"
+                    className="bg-red-500 text-white p-2 rounded mr-2"
                 >
                     Reset Chat
                 </button>
+                <button
+                    onClick={handleSave}
+                    className="bg-green-500 text-white p-2 rounded mr-2"
+                >
+                    Save Chat
+                </button>
+                <button
+                    onClick={handleLoad}
+                    className="bg-blue-500 text-white p-2 rounded"
+                    disabled={isLoading || !savedBlobIds[selectedPersona]}
+                >
+                    {isLoading ? 'Loading...' : 'Load Saved Chat'}
+                </button>
+            </div>
+            <div className="mb-4">
+                {savedBlobIds[selectedPersona] && (
+                    <p className="text-sm text-gray-600">
+                        Saved chat available for this persona (Blob ID: {savedBlobIds[selectedPersona]})
+                    </p>
+                )}
             </div>
             <div className="bg-gray-100 p-4 h-96 overflow-y-auto mb-4">
                 {messages.map((message, index) => (
