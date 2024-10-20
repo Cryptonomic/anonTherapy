@@ -105,6 +105,29 @@ function HomeContent() {
         setSavedBlobIds(loadedBlobIds);
     }, []);
 
+    useEffect(() => {
+        const fetchBlobIds = async () => {
+            if (primaryWallet && primaryWallet.address) {
+                for (const persona of personas) {
+                    try {
+                        const response = await axios.get(`/api/retrieve-blobid?address=${primaryWallet.address}&persona=${persona.id}`);
+                        if (response.data.success) {
+                            console.log(`BlobId for persona ${persona.name} (ID: ${persona.id}):`, response.data.blobId);
+                        } else {
+                            console.log(`No BlobId found for persona ${persona.name} (ID: ${persona.id})`);
+                        }
+                    } catch (error) {
+                        console.error(`Error retrieving BlobId for persona ${persona.name} (ID: ${persona.id}):`, error);
+                    }
+                }
+            } else {
+                console.log('Wallet not connected. Unable to retrieve BlobIds.');
+            }
+        };
+
+        fetchBlobIds();
+    }, [primaryWallet]);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!input.trim()) return;
