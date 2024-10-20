@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 
 const personas = [
     { id: 1, name: "Eccentric Psychoanalyst" },
@@ -97,8 +98,19 @@ export default function Home() {
 
     return (
         <main className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-2">AnonTherapy</h1>
-            <h2 className="text-xl font-semibold mb-6 text-gray-600 dark:text-gray-400">Touch grass, degen!</h2>
+            <div className="flex items-center mb-6">
+                <Image
+                    src="/raccoon-logo.png"
+                    alt="AnonTherapy Logo"
+                    width={80}
+                    height={80}
+                    className="rounded-full mr-4"
+                />
+                <div>
+                    <h1 className="text-3xl font-bold">AnonTherapy</h1>
+                    <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-400">Touch grass, degen!</h2>
+                </div>
+            </div>
             <div className="mb-4 flex items-center flex-wrap">
                 <label htmlFor="persona-select" className="mr-2">Select Therapist Persona:</label>
                 <select
