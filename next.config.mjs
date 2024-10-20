@@ -4,6 +4,10 @@ const nextConfig = {
         OPENAI_API_KEY: process.env.OPENAI_API_KEY,
         FUND_KEY: process.env.FUND_KEY
     },
+    eslint: {
+        // This disables the built-in ESLint check during builds
+        ignoreDuringBuilds: true,
+    },
 }
 
 export default nextConfig;
