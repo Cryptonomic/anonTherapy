@@ -16,15 +16,15 @@ const initialMessage = "All my memecoins went to zero and my dog left me. I am s
 
 export default function Home() {
     const [input, setInput] = useState(initialMessage);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState<Array<{ role: string; content: string }>>([]);
     const [selectedPersona, setSelectedPersona] = useState(1);
-    const [savedBlobIds, setSavedBlobIds] = useState({});
+    const [savedBlobIds, setSavedBlobIds] = useState<Record<number, string>>({});
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         // Load saved blobIds from localStorage on component mount
-        const loadedBlobIds = {};
+        const loadedBlobIds: Record<number, string> = {};
         personas.forEach(persona => {
             const blobId = localStorage.getItem(`persona_${persona.id}`);
             if (blobId) {
@@ -34,7 +34,7 @@ export default function Home() {
         setSavedBlobIds(loadedBlobIds);
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!input.trim()) return;
 
@@ -56,7 +56,7 @@ export default function Home() {
         setInput(initialMessage);
     };
 
-    const handlePersonaChange = (newPersona) => {
+    const handlePersonaChange = (newPersona: number) => {
         setSelectedPersona(newPersona);
         handleReset();
     };
