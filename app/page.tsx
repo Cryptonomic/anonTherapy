@@ -48,7 +48,7 @@ async function sendEthereum(toAddress: string, amount: string): Promise<string> 
 }
 
 const Dynamic = () => {
-    const { user, handleLogOut, setShowAuthFlow, primaryWallet } = useDynamicContext();
+    const { handleLogOut, primaryWallet } = useDynamicContext();
     const isLoggedIn = useIsLoggedIn();
     const [balance, setBalance] = useState<string | null>(null);
 
