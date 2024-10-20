@@ -71,12 +71,6 @@ const Dynamic = () => {
     if (isLoggedIn) {
         return (
             <div>
-                {primaryWallet && (
-                    <>
-                        <p>Address: {primaryWallet.address}</p>
-                        <p>Balance: {balance}</p>
-                    </>
-                )}
                 <button type='button' onClick={handleLogOut}>
                     Log Out
                 </button>
