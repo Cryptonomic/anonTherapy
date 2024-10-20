@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 
     try {
         // Make HTTP PUT request to Walrus
-        const response = await fetch('https://publisher.walrus-testnet.walrus.space/v1/store', {
+        const response = await fetch('https://walrus-testnet-publisher.nodes.guru/v1/store', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
