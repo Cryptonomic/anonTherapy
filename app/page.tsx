@@ -111,7 +111,7 @@ export default function Home() {
                     className="rounded-full mr-4"
                 />
                 <div>
-                    <h1 className="text-3xl font-bold">AnonTherapy</h1>
+                    <h1 className="text-3xl font-bold">Anon Therapy</h1>
                     <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-400">Touch grass, degen!</h2>
                 </div>
             </div>
