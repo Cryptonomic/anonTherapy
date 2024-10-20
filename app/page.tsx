@@ -129,13 +129,13 @@ export default function Home() {
                 </select>
                 <button
                     onClick={handleReset}
-                    className="bg-red-500 text-white p-2 rounded mr-2"
+                    className="bg-[#3D2906] text-white p-2 rounded mr-2"
                 >
                     Reset
                 </button>
                 <button
                     onClick={handleSave}
-                    className={`${isSaving ? 'bg-gray-500' : 'bg-green-500'} text-white p-2 rounded mr-2`}
+                    className={`${isSaving ? 'bg-gray-500' : 'bg-[#88A700]'} text-white p-2 rounded mr-2`}
                     disabled={isSaving}
                 >
                     {isSaving ? 'Saving...' : 'Save'}
@@ -143,7 +143,7 @@ export default function Home() {
                 {savedBlobIds[selectedPersona] && (
                     <button
                         onClick={handleLoad}
-                        className="bg-blue-500 text-white p-2 rounded"
+                        className="bg-[#698101] text-white p-2 rounded"
                         disabled={isLoading}
                     >
                         {isLoading ? 'Loading...' : 'Load Saved Chat'}
@@ -162,7 +162,7 @@ export default function Home() {
                     <div key={index} className={`mb-2 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
             <span className={`inline-block p-2 rounded-lg ${
                 message.role === 'user'
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-[#88A700] text-white'
                     : 'bg-gray-300 dark:bg-gray-600 text-black dark:text-white'
             }`}>
               {message.content}
@@ -178,7 +178,7 @@ export default function Home() {
                     className="flex-grow p-2 border rounded-l dark:bg-gray-700 dark:text-white"
                     placeholder={initialMessage}
                 />
-                <button type="submit" className="bg-blue-500 text-white p-2 rounded-r">Send</button>
+                <button type="submit" className="bg-[#88A700] text-white p-2 rounded-r">Send</button>
             </form>
         </main>
     );
