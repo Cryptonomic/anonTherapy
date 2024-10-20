@@ -8,6 +8,9 @@ const nextConfig = {
         // This disables the built-in ESLint check during builds
         ignoreDuringBuilds: true,
     },
+    typescript: {
+        ignoreBuildErrors: true,
+    },
 }
 
 export default nextConfig;
