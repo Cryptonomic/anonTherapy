@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Anon Therapy
 
-## Getting Started
+Touch some grass, degen!
 
-First, run the development server:
+https://anontherapy.xyz/ 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+==
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Still waiting for that bull cycle to arrive? Still getting rugged by influencers while your cousin at Deloitte bought their third Stanley cup? Terrified that this Thanksgiving your uncle is going to ask you about those memecoins you were talking about last year? Afraid your whole life was just a zero interest rate phenomenon?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Well, you tried therapy and that didn't quite work out, did it? Your therapist thinks your NFTs are just so cute and those numbers in your spreadsheet aren't real anyway. [Jaredfromsubway.eth](https://www.theblock.co/post/230218/jaredfromsubway-mev-bot] sandwich) attacking your DEX transactions isn't trauma??
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+We built Anon Therapy just for you.  Speak freely to our trained AI therapists that know how to help degens like you. Speak freely because we let you own your own therapy chat logs. There's no dev team at BetterHelp poring over your chat logs and pointing and laughing here. In fact, you can show your chats to your therapist so they know your trauma is real.
 
-## Learn More
+Bull market came roaring back and you feel on top of the world again? Just pretend these chats never happened and nobody will ever know that you were ever down this bad. 
 
-To learn more about Next.js, take a look at the following resources:
+## Technical Details
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Anon Therapy combines LLMs with blockchain technology to deliver and anonymous and secure product. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Chat logs are stored on the [Walrus](https://www.walrus.xyz/) network which provides fast and cheap decentralized storage. 
 
-## Deploy on Vercel
+[Dyanamic](https://www.dynamic.xyz/) is used for easy login using diverse web3 and web2 methods. 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We write hashes into a smart contract on [Flow](https://flow.com/) to easily port therapy sessions across different devices. 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Future Work
+
+We'll use Flow accounts to encrypt chat payloads which are stored on Walrus. 
+
+We'll use a payments system on Flow to enable monetization of the platform while maintaining anonymity.
+
+Ultimately, we will add anon human therapists and an onchain platform with a reputation system for matching users with therapists.
+
+One day this platform will be used by more than just degens, bringing mental health privacy to all.
+
+## Running the Code
+
+Install dependencies:
+
+`npm install`
+
+Run locally: 
+
+`npm run dev`
+
+Build for deployment:
+
+`npm run build`
