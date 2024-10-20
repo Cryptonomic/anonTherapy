@@ -19,6 +19,7 @@ export default function Home() {
     const [selectedPersona, setSelectedPersona] = useState(1);
     const [savedBlobIds, setSavedBlobIds] = useState<{[key: number]: string}>({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         // Load saved blobIds from localStorage on component mount
@@ -60,6 +61,7 @@ export default function Home() {
     };
 
     const handleSave = async () => {
+        setIsSaving(true);
         try {
             const response = await axios.post('/api/save', { messages, persona: selectedPersona });
             if (response.data.success) {
@@ -73,6 +75,8 @@ export default function Home() {
         } catch (error) {
             console.error('Error saving chat:', error);
             alert('Failed to save chat. Please try again.');
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -131,9 +135,10 @@ export default function Home() {
                 </button>
                 <button
                     onClick={handleSave}
-                    className="bg-green-500 text-white p-2 rounded mr-2"
+                    className={`${isSaving ? 'bg-gray-500' : 'bg-green-500'} text-white p-2 rounded mr-2`}
+                    disabled={isSaving}
                 >
-                    Save
+                    {isSaving ? 'Saving...' : 'Save'}
                 </button>
                 {savedBlobIds[selectedPersona] && (
                     <button
