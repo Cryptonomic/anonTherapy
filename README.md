@@ -8,7 +8,7 @@ https://anontherapy.xyz/
 
 Still waiting for that bull cycle to arrive? Still getting rugged by influencers while your cousin at Deloitte bought their third Stanley cup? Terrified that this Thanksgiving your uncle is going to ask you about those memecoins you were talking about last year? Afraid your whole life was just a zero interest rate phenomenon?
 
-Well, you tried therapy and that didn't quite work out, did it? Your therapist thinks your NFTs are just so cute and those numbers in your spreadsheet aren't real anyway. Jaredfromsubway.eth sandwich attacking your DEX transactions isn't trauma??
+Well, you tried therapy and that didn't quite work out, did it? Your therapist thinks your NFTs are just so cute and those numbers in your spreadsheet aren't real anyway. [Jaredfromsubway.eth](https://www.theblock.co/post/230218/jaredfromsubway-mev-bot] sandwich) attacking your DEX transactions isn't trauma??
 
 We built Anon Therapy just for you.  Speak freely to our trained AI therapists that know how to help degens like you. Speak freely because we let you own your own therapy chat logs. There's no dev team at BetterHelp poring over your chat logs and pointing and laughing here. In fact, you can show your chats to your therapist so they know your trauma is real.
 
