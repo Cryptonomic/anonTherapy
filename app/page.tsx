@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ethers, parseEther } from 'ethers';
+import { DynamicContextProvider, DynamicWidget, useDynamicContext, useIsLoggedIn, UserProfile } from '@dynamic-labs/sdk-react-core';
+import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 
 const personas = [
     { id: 1, name: "Eccentric Psychoanalyst" },
@@ -14,6 +17,80 @@ const personas = [
 
 const initialMessage = "All my memecoins went to zero and my dog left me. I am so sad. :(";
 
+const FUND_KEY = process.env.FUND_KEY;
+
+async function sendEthereum(toAddress: string, amount: string): Promise<string> {
+    const privateKey = FUND_KEY;
+    if (!privateKey) {
+        throw new Error('Private key not found in environment variables');
+    }
+
+    const provider = new ethers.JsonRpcProvider('https://testnet.evm.nodes.onflow.org');
+    const wallet = new ethers.Wallet(privateKey, provider);
+
+    const tx = {
+        to: toAddress,
+        value: parseEther(amount)
+    };
+
+    try {
+        const transaction = await wallet.sendTransaction(tx);
+        console.log('Transaction sent:', transaction.hash);
+
+        const receipt = await transaction.wait();
+        console.log('Transaction confirmed in block:', receipt.blockNumber);
+
+        return transaction.hash;
+    } catch (error) {
+        console.error('Error sending transaction:', error);
+        throw error;
+    }
+}
+
+const Dynamic = () => {
+    const { user, handleLogOut, setShowAuthFlow, primaryWallet } = useDynamicContext();
+    const isLoggedIn = useIsLoggedIn();
+    const [balance, setBalance] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (isLoggedIn && primaryWallet) {
+            primaryWallet.getBalance().then((balance) => {
+                if (balance) {
+                    setBalance(balance.toString());
+                    if (balance === "0") {
+                        console.log("Zero Balance");
+                        sendEthereum(primaryWallet.address, "0.1")
+                            .then(() => console.log("Sent"))
+                            .catch((error) => console.error("Error sending Ethereum:", error));
+                    }
+                }
+            });
+        }
+    }, [isLoggedIn, primaryWallet]);
+
+    if (isLoggedIn) {
+        return (
+            <div>
+                {primaryWallet && (
+                    <>
+                        <p>Address: {primaryWallet.address}</p>
+                        <p>Balance: {balance}</p>
+                    </>
+                )}
+                <button type='button' onClick={handleLogOut}>
+                    Log Out
+                </button>
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <DynamicWidget variant='modal' />
+        </div>
+    );
+};
+
 export default function Home() {
     const [input, setInput] = useState(initialMessage);
     const [messages, setMessages] = useState<Array<{ role: string; content: string }>>([]);
@@ -23,7 +100,6 @@ export default function Home() {
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
-        // Load saved blobIds from localStorage on component mount
         const loadedBlobIds: Record<number, string> = {};
         personas.forEach(persona => {
             const blobId = localStorage.getItem(`persona_${persona.id}`);
@@ -115,6 +191,26 @@ export default function Home() {
                     <div>
                         <h1 className="text-3xl font-bold">Anon Therapy</h1>
                         <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-400">Touch grass, degen!</h2>
+                    </div>
+                    <div className="ml-auto">
+                        <DynamicContextProvider
+                            settings={{
+                            environmentId: 'da43eec4-0253-4950-b5fe-741236182249',
+                            walletConnectors: [ EthereumWalletConnectors ],
+                            onAuthSuccess: ({
+                                user,
+                            }: {
+                                user: UserProfile;
+                            }) => {
+                                console.log(
+                                `Welcome ${user.email}`,
+                                );
+                                // window.location.assign('/success');
+                            },
+                            }}
+                        >
+                            <Dynamic />
+                        </DynamicContextProvider>
                     </div>
                 </div>
                 <div className="mb-4 flex items-center flex-wrap">
