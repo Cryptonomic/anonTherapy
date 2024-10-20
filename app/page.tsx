@@ -184,7 +184,8 @@ export default function Home() {
                 </form>
             </div>
             <footer className="mt-8 text-center text-gray-600 dark:text-gray-400">
-                Made with 🥰 by <Link href="https://cryptonomic.tech/" className="text-[#88A700] hover:underline">Cryptonomic</Link>
+                Made with 🥰 by <Link href="https://cryptonomic.tech/" className="text-[#88A700] hover:underline">Cryptonomic</Link> &nbsp; |
+                &nbsp; <Link href="https://github.com/Cryptonomic/anonTherapy/blob/main/README.md" className="text-[#88A700] hover:underline">About the Project</Link>
             </footer>
         </main>
     );
