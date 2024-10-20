@@ -6,6 +6,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'media', // This line enables dark mode based on system preference
   theme: {
     extend: {
       colors: {
@@ -16,4 +17,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;
