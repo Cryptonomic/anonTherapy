@@ -4,14 +4,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const personas = [
-    { id: 1, name: "Eccentric German Psychoanalyst" },
+    { id: 1, name: "Eccentric Psychoanalyst" },
     { id: 2, name: "Crypto Degen CBT Therapist" },
-    { id: 3, name: "Straight-Laced Judgmental Therapist" },
-    { id: 4, name: "Secret Dog Therapist" }
+    { id: 3, name: "Normie Therapist" },
+    { id: 4, name: "Dr. Scoob" }
 ];
 
+const initialMessage = "All my memecoins went to zero and my dog left me. I am so sad. :(";
+
 export default function Home() {
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState(initialMessage);
     const [messages, setMessages] = useState<Array<{ role: string; content: string }>>([]);
     const [selectedPersona, setSelectedPersona] = useState(1);
     const [savedBlobIds, setSavedBlobIds] = useState<{[key: number]: string}>({});
@@ -48,7 +50,7 @@ export default function Home() {
 
     const handleReset = () => {
         setMessages([]);
-        setInput('');
+        setInput(initialMessage);
     };
 
     const handlePersonaChange = (newPersona: number) => {
@@ -103,7 +105,7 @@ export default function Home() {
                     id="persona-select"
                     value={selectedPersona}
                     onChange={(e) => handlePersonaChange(Number(e.target.value))}
-                    className="p-2 border rounded mr-2"
+                    className="p-2 border rounded mr-2 bg-white dark:bg-gray-700 text-black dark:text-white"
                 >
                     {personas.map(persona => (
                         <option key={persona.id} value={persona.id}>{persona.name}</option>
@@ -121,13 +123,15 @@ export default function Home() {
                 >
                     Save
                 </button>
-                <button
-                    onClick={handleLoad}
-                    className="bg-blue-500 text-white p-2 rounded"
-                    disabled={isLoading || !savedBlobIds[selectedPersona]}
-                >
-                    {isLoading ? 'Loading...' : 'Load Saved Chat'}
-                </button>
+                {savedBlobIds[selectedPersona] && (
+                    <button
+                        onClick={handleLoad}
+                        className="bg-blue-500 text-white p-2 rounded"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Loading...' : 'Load Saved Chat'}
+                    </button>
+                )}
             </div>
             <div className="mb-4">
                 {savedBlobIds[selectedPersona] && (
@@ -155,7 +159,7 @@ export default function Home() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     className="flex-grow p-2 border rounded-l dark:bg-gray-700 dark:text-white"
-                    placeholder="All my memecoins went to zero and my dog left me. I am so sad. :("
+                    placeholder={initialMessage}
                 />
                 <button type="submit" className="bg-blue-500 text-white p-2 rounded-r">Send</button>
             </form>
